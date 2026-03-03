@@ -20,7 +20,7 @@ flowchart TD
     E --> F
     F --> G[Context + Citation Assignment]
     G --> H[Offline/LLM Generator]
-    H --> I[Answer with [1][2] + Sources]
+    H --> I["Answer with citations + Sources"]
     I --> J[CLI + FastAPI + SSE UI]
     J --> K[chat_logs + eval.py report]
 ```
