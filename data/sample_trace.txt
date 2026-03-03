@@ -1,0 +1,1 @@
+TraceRAG uses hybrid retrieval: BM25 + vector search and RRF fusion. The pipeline tracks metadata like source, heading and page_number. Incremental dedup is done by content hash per source.
