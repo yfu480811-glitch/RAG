@@ -1,0 +1,1 @@
+OfflineGenerator builds answers from retrieved chunks and appends citation tags like [1][2]. Sources list includes title, source, page/heading and chunk_id.
