@@ -1,0 +1,10 @@
+{"query":"TraceRAG 的检索融合方法是什么？","expected_source":"data/sample_trace.txt","expected_keywords":["BM25","RRF"]}
+{"query":"系统是否支持 PDF 页码元数据？","expected_source":"data/sample_trace.txt","expected_keywords":["page_number","PDF"]}
+{"query":"如何保证增量去重？","expected_source":"data/sample_trace.txt","expected_keywords":["hash","source"]}
+{"query":"/chat 接口是如何返回的？","expected_source":"data/sample_api.txt","expected_keywords":["SSE","delta"]}
+{"query":"/health 返回什么？","expected_source":"data/sample_api.txt","expected_keywords":["status","ok"]}
+{"query":"OfflineGenerator 的作用是什么？","expected_source":"data/sample_gen.txt","expected_keywords":["offline","引用"]}
+{"query":"Sources 列表包含哪些字段？","expected_source":"data/sample_gen.txt","expected_keywords":["chunk_id","source"]}
+{"query":"向量检索索引用什么实现？","expected_source":"data/sample_retrieval.txt","expected_keywords":["FAISS","index"]}
+{"query":"词法检索组件是什么？","expected_source":"data/sample_retrieval.txt","expected_keywords":["BM25"]}
+{"query":"引用编号格式示例是什么？","expected_source":"data/sample_gen.txt","expected_keywords":["[1]","[2]"]}

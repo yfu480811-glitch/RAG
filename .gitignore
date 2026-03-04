@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+.pytest_cache/
+data/*
+!data/eval_set.jsonl
+!data/sample_trace.txt
+!data/sample_api.txt
+!data/sample_gen.txt
+!data/sample_retrieval.txt
+reports/

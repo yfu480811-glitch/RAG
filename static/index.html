@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TraceRAG Demo</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 900px; margin: 24px auto; }
+    textarea { width: 100%; height: 90px; }
+    #answer { white-space: pre-wrap; border: 1px solid #ccc; padding: 12px; min-height: 120px; }
+    #sources { white-space: pre-wrap; border: 1px solid #ddd; padding: 12px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2>TraceRAG SSE Demo</h2>
+  <textarea id="query" placeholder="Ask a question..."></textarea><br/>
+  <button id="run">Run</button>
+
+  <h3>Answer</h3>
+  <div id="answer"></div>
+
+  <h3>Sources</h3>
+  <div id="sources"></div>
+
+  <script>
+    const answerEl = document.getElementById('answer');
+    const sourcesEl = document.getElementById('sources');
+
+    document.getElementById('run').onclick = async () => {
+      answerEl.textContent = '';
+      sourcesEl.textContent = '';
+      const query = document.getElementById('query').value.trim();
+      if (!query) return;
+
+      const resp = await fetch('/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query, top_k: 6 })
+      });
+
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        const parts = buffer.split('\n\n');
+        buffer = parts.pop() || '';
+        for (const msg of parts) {
+          const event = (msg.match(/^event: (.+)$/m) || [])[1] || 'message';
+          const data = (msg.match(/^data: (.+)$/m) || [])[1] || '';
+          if (event === 'delta') {
+            try { answerEl.textContent += JSON.parse(data).delta; } catch {}
+          } else if (event === 'sources') {
+            try {
+              const payload = JSON.parse(data);
+              const arr = payload.sources || [];
+              sourcesEl.textContent = arr.map(s => `[${s.index}] ${s.title || 'untitled'} - ${s.source} - ${s.location} - ${s.chunk_id}`).join('\n');
+            } catch {}
+          }
+        }
+      }
+    };
+  </script>
+</body>
+</html>
