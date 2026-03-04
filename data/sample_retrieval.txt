@@ -1,0 +1,1 @@
+Vector retrieval is implemented with FAISS index. Lexical retrieval uses BM25, and results are merged with Reciprocal Rank Fusion.
